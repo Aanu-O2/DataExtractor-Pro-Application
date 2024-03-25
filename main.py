@@ -45,7 +45,25 @@ def main():
         extracted_text = extract_text_json(image_path=image_file)
         if extracted_text:
             st.session_state.extracted_text = extracted_text
-            st.text_area("Extracted Text", extracted_text)
+            #st.text_area("Extracted Text", extracted_text)
+            st.text_area("Extracted Text", extracted_text, height=250)
+
+        # Ask the user if they want to proceed with the extracted text
+        proceed_option = st.radio(
+            "Do you want to upload the extracted text or reload the image?",
+            ('Yes, upload', 'No, reload the image'))
+
+        if proceed_option == 'Yes, upload':
+            # Code to handle the upload
+            st.success("Proceeding to upload extracted text...")
+            # Example: upload_text(extracted_text)
+        elif proceed_option == 'No, reload the image':
+            st.warning("Please reload the image.")
+            # Optionally, add a file uploader or any mechanism to reload the image
+            # Example: image_file = st.file_uploader("Upload your image here", type=["png", "jpg", "jpeg"])
+    else:
+        # Optional: Instructions or action buttons if no text extraction is triggered
+        st.info("Click the button above to extract text from your image.")
 
     # Step 3: Upload to S3 and save to MongoDB
     st.header("Step 3: Upload File to Database")
